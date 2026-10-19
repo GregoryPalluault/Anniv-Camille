@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+<title>Soirée Miss Camille</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;0,700;1,500&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* Layout : appli une colonne, onglets en bas. Thème unique blanc et or (choix voulu). */
+:root{
+  --bg:#fffdf8; --card:#ffffff; --ink:#2b2418; --muted:#8a7a5c;
+  --gold:#b8892b; --gold-light:#e9d29a; --gold-pale:#faf3e2;
+  --ok:#2f8f5b; --no:#c62f3a; --no-pale:#fde8ea;
+  --display:"Bodoni Moda", Didot, "Times New Roman", serif;
+  --body:"Jost", "Avenir Next", system-ui, sans-serif;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45}
+.app{max-width:520px;margin:0 auto;padding-block:18px 110px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;padding-block:6px 18px}
+.crown{width:64px;height:auto}
+h1{font-family:var(--display);font-weight:700;font-size:2rem;margin:0;letter-spacing:.01em;text-wrap:balance}
+h1 em{font-style:italic;font-weight:500;color:var(--gold)}
+.sub{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+h2{font-family:var(--display);font-weight:500;font-size:1.4rem;margin:0}
+.panel{background:var(--card);border:1px solid var(--gold-light);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.btn{appearance:none;border:0;border-radius:999px;font:600 1.05rem var(--body);padding:16px 22px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;min-height:54px}
+.btn:focus-visible,.chip:focus-visible,.tab:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.btn-gold{background:linear-gradient(135deg,#d4aa4f,#a8781f);color:#fff;box-shadow:0 6px 18px rgba(168,120,31,.3)}
+.btn-line{background:transparent;color:var(--gold);border:1.5px solid var(--gold)}
+.btn-red{background:var(--no);color:#fff}
+.btn-small{font-size:.9rem;padding:9px 14px;min-height:40px}
+.scan-zone{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding-block:10px}
+.scan-frame{width:170px;height:170px;border-radius:20px;position:relative;display:grid;place-items:center;background:var(--gold-pale)}
+.scan-frame::before,.scan-frame::after{content:"";position:absolute;inset:0;border-radius:20px;border:3px solid var(--gold);clip-path:polygon(0 0,30% 0,30% 6%,6% 6%,6% 30%,0 30%,0 70%,6% 70%,6% 94%,30% 94%,30% 100%,70% 100%,70% 94%,94% 94%,94% 70%,100% 70%,100% 30%,94% 30%,94% 6%,70% 6%,70% 0,100% 0,100% 100%,0 100%)}
+.scan-frame::after{display:none}
+.scan-frame svg{width:80px;opacity:.55}
+.hint{color:var(--muted);font-size:.92rem;max-width:34ch}
+.msg{font-size:.95rem;padding:10px 14px;border-radius:12px;background:var(--no-pale);color:var(--no)}
+.stats{display:flex;gap:10px}
+.stat{flex:1;text-align:center;border-top:1px solid var(--gold-light);padding-top:10px}
+.stat b{display:block;font-family:var(--display);font-size:1.7rem;font-variant-numeric:tabular-nums}
+.stat span{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+/* Liste */
+.list{display:flex;flex-direction:column}
+.row{display:flex;align-items:center;gap:12px;padding-block:12px;border-bottom:1px solid var(--gold-pale)}
+.row:last-child{border-bottom:0}
+.thumb{width:52px;height:52px;border-radius:50%;flex:none;background:var(--gold-pale);border:2px solid var(--gold-light);display:grid;place-items:center;overflow:hidden;font-family:var(--display);color:var(--gold);font-size:1.1rem;cursor:pointer;position:relative}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.who{flex:1;min-width:0}
+.who .n{font-weight:600;overflow-wrap:anywhere}
+.who .s{font-size:.8rem;color:var(--muted)}
+.chip{border:0;border-radius:999px;padding:6px 12px;font:600 .8rem var(--body);cursor:pointer;letter-spacing:.06em}
+.chip.oui{background:#e6f4ec;color:var(--ok)}
+.chip.non{background:var(--no-pale);color:var(--no)}
+.row-actions{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.link{background:none;border:0;color:var(--gold);font:500 .85rem var(--body);cursor:pointer;padding:2px 0;text-decoration:underline;text-underline-offset:3px}
+.form{display:flex;flex-direction:column;gap:10px}
+.form label{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.form input[type=text]{font:1rem var(--body);padding:12px 14px;border:1.5px solid var(--gold-light);border-radius:12px;background:#fff;color:var(--ink)}
+.form input[type=text]:focus{outline:none;border-color:var(--gold)}
+.seg{display:flex;gap:8px}
+.seg button{flex:1}
+.seg .on.oui{outline:2px solid var(--ok)}
+.seg .on.non{outline:2px solid var(--no)}
+/* Onglets */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--gold-light);display:flex;justify-content:center;gap:4px;padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px));z-index:5}
+.tab{flex:1;max-width:170px;background:none;border:0;border-radius:12px;padding:8px 4px;font:500 .8rem var(--body);color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tab svg{width:24px;height:24px}
+.tab[aria-selected=true]{color:var(--gold);background:var(--gold-pale)}
+/* Plein écran : carte, validé, refusé */
+.overlay{position:fixed;inset:0;z-index:20;overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding-top:calc(20px + env(safe-area-inset-top,0px));padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));background:rgba(43,36,24,.55);backdrop-filter:blur(4px)}
+.idcard{width:100%;max-width:360px;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.3);position:relative;border:2px solid var(--gold-light)}
+.idcard .band{background:linear-gradient(135deg,#d4aa4f,#a8781f);color:#fff;text-align:center;padding:12px 10px}
+.idcard .band small{display:block;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;opacity:.9}
+.idcard .band b{font-family:var(--display);font-size:1.15rem;font-weight:500;font-style:italic}
+.idbody{display:flex;flex-direction:column;align-items:center;gap:14px;padding:22px 20px 18px}
+.idphoto{width:150px;height:180px;border-radius:14px;overflow:hidden;background:var(--gold-pale);border:3px solid var(--gold-light);display:grid;place-items:center;font-family:var(--display);font-size:3rem;color:var(--gold)}
+.idphoto img{width:100%;height:100%;object-fit:cover}
+.fields{width:100%;display:flex;flex-direction:column;gap:8px}
+.field{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px dashed var(--gold-light);padding-bottom:6px}
+.field span{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.field b{font-size:1.1rem;text-align:right;overflow-wrap:anywhere}
+.invite{width:100%;text-align:center;padding:12px;border-radius:12px;font-weight:600;letter-spacing:.06em;font-size:1.1rem}
+.invite.oui{background:#e6f4ec;color:var(--ok)}
+.invite.non{background:var(--no-pale);color:var(--no)}
+.already{font-size:.85rem;color:var(--muted);text-align:center}
+.sash{position:absolute;top:84px;right:-48px;transform:rotate(38deg);background:#fff;border:1.5px solid var(--gold);color:var(--gold);font-family:var(--display);font-style:italic;font-size:.82rem;padding:3px 50px;white-space:nowrap}
+.actions{display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px}
+.full{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));padding-block:24px}
+.full.ok{background:radial-gradient(circle at 50% 35%,#fff 0%,#fbf1d8 60%,#f1dca6 100%);color:var(--ink)}
+.full.no{background:var(--no);color:#fff}
+.full .big{font-family:var(--display);font-weight:700;font-size:3rem;line-height:1;margin:0}
+.full .welcome{font-family:var(--display);font-style:italic;font-size:1.6rem;max-width:16ch;text-wrap:balance;margin:0}
+.full.ok .welcome{color:var(--gold)}
+.full .mark{width:110px;height:110px;border-radius:50%;display:grid;place-items:center}
+.full.ok .mark{background:var(--ok)}
+.full.no .mark{background:rgba(255,255,255,.18)}
+.full .mark svg{width:60px;height:60px}
+.full.no .btn{background:#fff;color:var(--no)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:31}
+.qrbox{background:#fff;border-radius:18px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:10px;max-width:340px;width:100%;text-align:center}
+.qrbox img,.qrbox svg{width:240px;height:240px;max-width:100%}
+.confirm{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+@media (prefers-reduced-motion:no-preference){
+  .idcard{animation:pop .35s ease-out}
+  .full .mark{animation:pop .4s ease-out}
+}
+@keyframes pop{from{transform:scale(.85);opacity:.3}to{transform:scale(1);opacity:1}}
+</style>
+
+<div class="app">
+  <header class="top">
+    <svg class="crown" viewBox="0 0 64 40" aria-hidden="true"><path d="M4 34 L8 10 L20 22 L32 4 L44 22 L56 10 L60 34 Z" fill="#d4aa4f" stroke="#a8781f" stroke-width="1.5" stroke-linejoin="round"/><rect x="4" y="33" width="56" height="5" rx="2" fill="#a8781f"/><circle cx="32" cy="4" r="3" fill="#fff" stroke="#a8781f"/><circle cx="8" cy="10" r="2.5" fill="#fff" stroke="#a8781f"/><circle cx="56" cy="10" r="2.5" fill="#fff" stroke="#a8781f"/></svg>
+    <span class="sub">Soirée d'élection</span>
+    <h1>L'anniversaire de <em>Camille</em></h1>
+  </header>
+
+  <main>
+    <section id="tab-scan" class="panel">
+      <div class="scan-zone">
+        <div class="scan-frame"><svg viewBox="0 0 24 24" fill="none" stroke="#a8781f" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM18 18h3v3h-3zM18 14h3M14 18v3"/></svg></div>
+        <h2>Contrôle des invitations</h2>
+        <p class="hint">Appuie sur le bouton, prends en photo le QR code de l'invitée, et sa carte d'identité s'affiche.</p>
+        <label class="btn btn-gold" for="scanInput" style="width:100%">Scanner un QR code</label>
+        <input id="scanInput" type="file" accept="image/*" capture="environment" hidden>
+        <p id="scanMsg" class="msg" hidden></p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="stIn">0</b><span>Invitées</span></div>
+        <div class="stat"><b id="stArr">0</b><span>Arrivées</span></div>
+      </div>
+    </section>
+
+    <section id="tab-list" class="panel" hidden>
+      <h2>Les invitées</h2>
+      <p class="hint" style="margin:0">Touche le rond pour ajouter la photo. Touche « oui / non » pour changer l'invitation.</p>
+      <div id="list" class="list"></div>
+      <input id="photoInput" type="file" accept="image/*" hidden>
+    </section>
+
+    <section id="tab-add" class="panel" hidden>
+      <h2>Ajouter une personne</h2>
+      <form id="addForm" class="form">
+        <label for="fPrenom">Prénom</label>
+        <input id="fPrenom" type="text" autocomplete="off" required>
+        <label for="fNom">Nom</label>
+        <input id="fNom" type="text" autocomplete="off" required>
+        <label>Invitation</label>
+        <div class="seg">
+          <button type="button" id="fOui" class="chip oui on">OUI</button>
+          <button type="button" id="fNon" class="chip non">NON</button>
+        </div>
+        <button class="btn btn-gold" type="submit">Ajouter</button>
+        <p id="addMsg" class="hint" hidden></p>
+      </form>
+      <hr style="border:0;border-top:1px solid var(--gold-light);width:100%">
+      <div class="form">
+        <label>Le jour de la fête</label>
+        <div id="resetZone" class="confirm">
+          <button class="btn btn-line btn-small" id="resetBtn" type="button">Remettre les arrivées à zéro</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-tab="scan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M7 12h10"/></svg>Scanner</button>
+  <button class="tab" role="tab" aria-selected="false" data-tab="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2 .8 3 3 3 6"/></svg>Invitées</button>
+  <button class="tab" role="tab" aria-selected="false" data-tab="add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Ajouter</button>
+</nav>
+
+<div id="overlay" class="overlay" hidden></div>
+<div id="full" class="full" hidden></div>
+<canvas id="confetti" hidden></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script>
+const KEY = "missCamille_v1";
+const PREFIX = "MISSCAMILLE|";
+const DEFAULTS = [
+  {id:"g1", prenom:"Léa", nom:"Dusséaux", invite:true},
+  {id:"g2", prenom:"Constance", nom:"Touchet", invite:true},
+  {id:"g3", prenom:"Margaux", nom:"Laloyer", invite:true},
+  {id:"g4", prenom:"Elena", nom:"Menut", invite:true},
+  {id:"g5", prenom:"Zoé", nom:"Alix", invite:true},
+  {id:"g6", prenom:"Mathilde", nom:"Barraud", invite:false}
+];
+let guests = load();
+
+function load(){
+  try{ const s = JSON.parse(localStorage.getItem(KEY)); if (s && Array.isArray(s.guests)) return s.guests; }catch(e){}
+  return DEFAULTS.map(g => ({...g, photo:null, arrive:false}));
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify({guests})); return true; }
+  catch(e){ return false; }
+}
+const $ = s => document.querySelector(s);
+const esc = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const initials = g => (g.prenom[0]||"") + (g.nom[0]||"");
+
+/* Onglets */
+document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
+  document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", x===t));
+  ["scan","list","add"].forEach(n => $("#tab-"+n).hidden = n !== t.dataset.tab);
+  render();
+}));
+
+/* Rendu */
+function render(){
+  $("#stIn").textContent = guests.filter(g=>g.invite).length;
+  $("#stArr").textContent = guests.filter(g=>g.arrive).length;
+  $("#list").innerHTML = guests.map(g => `
+    <div class="row">
+      <button class="thumb" data-photo="${g.id}" aria-label="Photo de ${esc(g.prenom)}">${g.photo ? `<img src="${g.photo}" alt="">` : esc(initials(g))}</button>
+      <div class="who"><div class="n">${esc(g.prenom)} ${esc(g.nom)}</div>
+        <div class="s">${g.arrive ? "Arrivée ✓" : (g.photo ? "Photo ajoutée" : "Pas encore de photo")}</div></div>
+      <div class="row-actions">
+        <button class="chip ${g.invite?"oui":"non"}" data-toggle="${g.id}">${g.invite?"OUI":"NON"}</button>
+        <button class="link" data-qr="${g.id}">QR code</button>
+        <button class="link" data-del="${g.id}">Retirer</button>
+      </div>
+    </div>`).join("");
+}
+
+let photoFor = null;
+$("#list").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.photo){ photoFor = b.dataset.photo; $("#photoInput").value=""; $("#photoInput").click(); }
+  if (b.dataset.toggle){ const g = find(b.dataset.toggle); g.invite = !g.invite; save(); render(); }
+  if (b.dataset.qr) showQR(find(b.dataset.qr));
+  if (b.dataset.del){
+    if (b.dataset.sure){ guests = guests.filter(g => g.id !== b.dataset.del); save(); render(); }
+    else { b.dataset.sure = "1"; b.textContent = "Sûre ? Touche encore"; b.style.color = "var(--no)"; }
+  }
+});
+const find = id => guests.find(g => g.id === id);
+
+/* Photo : réduite pour tenir dans le téléphone */
+$("#photoInput").addEventListener("change", async e => {
+  const f = e.target.files[0]; if (!f || !photoFor) return;
+  const img = await fileToImage(f);
+  const c = document.createElement("canvas");
+  const W = 300, H = 360, r = Math.max(W/img.width, H/img.height);
+  c.width = W; c.height = H;
+  const x = c.getContext("2d");
+  x.drawImage(img, (W - img.width*r)/2, (H - img.height*r)/2, img.width*r, img.height*r);
+  const g = find(photoFor); const old = g.photo;
+  g.photo = c.toDataURL("image/jpeg", .8);
+  if (!save()){ g.photo = old; }
+  render();
+});
+function fileToImage(f){
+  return new Promise((res, rej) => { const u = URL.createObjectURL(f); const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = u; });
+}
+
+/* Scan : photo du QR code puis lecture */
+$("#scanInput").addEventListener("change", async e => {
+  const f = e.target.files[0]; e.target.value = ""; if (!f) return;
+  $("#scanMsg").hidden = true;
+  let code = null;
+  try{
+    const img = await fileToImage(f);
+    for (const size of [1000, 700, 1400, 500]){
+      const r = Math.min(1, size / Math.max(img.width, img.height));
+      const c = document.createElement("canvas"); c.width = Math.round(img.width*r); c.height = Math.round(img.height*r);
+      const x = c.getContext("2d", {willReadFrequently:true}); x.drawImage(img, 0, 0, c.width, c.height);
+      const d = x.getImageData(0, 0, c.width, c.height);
+      const q = window.jsQR && jsQR(d.data, c.width, c.height, {inversionAttempts:"attemptBoth"});
+      if (q){ code = q.data; break; }
+    }
+  }catch(err){}
+  if (!code) return scanError("Je n'ai pas trouvé de QR code. Rapproche-toi et reprends la photo bien en face.");
+  if (!code.startsWith(PREFIX)) return scanError("Ce QR code n'est pas une invitation de la soirée.");
+  const g = find(code.slice(PREFIX.length));
+  if (!g) return scanError("Cette invitation n'est plus dans la liste.");
+  showCard(g);
+});
+function scanError(t){ const m = $("#scanMsg"); m.textContent = t; m.hidden = false; }
+
+/* Carte d'identité */
+function showCard(g){
+  const o = $("#overlay");
+  o.innerHTML = `
+    <div class="idcard">
+      <div class="band"><small>Carte d'identité</small><b>Soirée Miss Camille</b></div>
+      <div class="sash">Miss ${esc(g.prenom)}</div>
+      <div class="idbody">
+        <div class="idphoto">${g.photo ? `<img src="${g.photo}" alt="Photo de ${esc(g.prenom)}">` : esc(initials(g))}</div>
+        <div class="fields">
+          <div class="field"><span>Nom</span><b>${esc(g.nom.toUpperCase())}</b></div>
+          <div class="field"><span>Prénom</span><b>${esc(g.prenom)}</b></div>
+        </div>
+        <div class="invite ${g.invite?"oui":"non"}">Invitation : ${g.invite?"OUI":"NON"}</div>
+        ${g.arrive ? `<div class="already">Déjà validée tout à l'heure</div>` : ""}
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-gold" id="validate">Valider</button>
+      <button class="btn btn-line" id="close" style="background:#fff">Annuler</button>
+    </div>`;
+  o.hidden = false;
+  $("#close").onclick = () => o.hidden = true;
+  $("#validate").onclick = () => { o.hidden = true; g.invite ? welcome(g) : refuse(g); };
+}
+
+function welcome(g){
+  g.arrive = true; save(); render();
+  const f = $("#full"); f.className = "full ok";
+  f.innerHTML = `
+    <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></div>
+    <p class="big">Validé !</p>
+    <p class="welcome">Bienvenue à l'anniversaire de Camille</p>
+    <p class="hint" style="color:var(--ink)">${esc(g.prenom)} ${esc(g.nom)}</p>
+    <button class="btn btn-gold" id="next">Invitée suivante</button>`;
+  f.hidden = false; confetti();
+  $("#next").onclick = () => { f.hidden = true; stopConfetti(); };
+}
+function refuse(g){
+  const f = $("#full"); f.className = "full no";
+  f.innerHTML = `
+    <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></div>
+    <p class="big">Refusé</p>
+    <p class="welcome" style="color:#fff">${esc(g.prenom)} n'est pas sur la liste des invitées</p>
+    <button class="btn" id="next">Retour</button>`;
+  f.hidden = false;
+  $("#next").onclick = () => f.hidden = true;
+}
+
+/* QR code d'une personne */
+function showQR(g){
+  const qr = qrcode(0, "M"); qr.addData(PREFIX + g.id); qr.make();
+  const o = $("#overlay");
+  o.innerHTML = `
+    <div class="qrbox">
+      <h2>${esc(g.prenom)} ${esc(g.nom)}</h2>
+      ${qr.createSvgTag({cellSize:6, margin:3, scalable:true})}
+      <p class="hint">Fais une capture d'écran pour l'imprimer ou l'envoyer.</p>
+      <button class="btn btn-gold" id="close">Fermer</button>
+    </div>`;
+  o.hidden = false;
+  $("#close").onclick = () => o.hidden = true;
+}
+
+/* Ajouter */
+let newInvite = true;
+$("#fOui").onclick = () => { newInvite = true; $("#fOui").classList.add("on"); $("#fNon").classList.remove("on"); };
+$("#fNon").onclick = () => { newInvite = false; $("#fNon").classList.add("on"); $("#fOui").classList.remove("on"); };
+$("#addForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const p = $("#fPrenom").value.trim(), n = $("#fNom").value.trim();
+  if (!p || !n) return;
+  guests.push({id:"g"+Date.now().toString(36), prenom:p, nom:n, invite:newInvite, photo:null, arrive:false});
+  save(); render();
+  $("#fPrenom").value = ""; $("#fNom").value = "";
+  const m = $("#addMsg"); m.textContent = `${p} ${n} est ajoutée. Son QR code est dans l'onglet Invitées.`; m.hidden = false;
+});
+$("#resetZone").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.id === "resetBtn"){
+    $("#resetZone").innerHTML = `<span class="hint">Sûre ?</span><button class="btn btn-red btn-small" id="resetYes">Oui, remettre à zéro</button><button class="btn btn-line btn-small" id="resetNo">Non</button>`;
+  } else {
+    if (b.id === "resetYes"){ guests.forEach(g => g.arrive = false); save(); render(); }
+    $("#resetZone").innerHTML = `<button class="btn btn-line btn-small" id="resetBtn" type="button">Remettre les arrivées à zéro</button>`;
+  }
+});
+
+/* Confettis dorés */
+let raf = null;
+function confetti(){
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c = $("#confetti"); c.hidden = false;
+  const x = c.getContext("2d"); c.width = innerWidth; c.height = innerHeight;
+  const cols = ["#d4aa4f","#e9d29a","#a8781f","#ffffff","#f3e2b3"];
+  const ps = Array.from({length:120}, () => ({x:Math.random()*c.width, y:-20-Math.random()*c.height, w:6+Math.random()*6, h:8+Math.random()*8, vy:2+Math.random()*3, vx:-1+Math.random()*2, a:Math.random()*6, va:-.1+Math.random()*.2, col:cols[Math.random()*cols.length|0]}));
+  const tick = () => {
+    x.clearRect(0,0,c.width,c.height);
+    ps.forEach(p => { p.y += p.vy; p.x += p.vx; p.a += p.va; if (p.y > c.height+20){ p.y = -20; }
+      x.save(); x.translate(p.x,p.y); x.rotate(p.a); x.fillStyle = p.col; x.strokeStyle="#c9a24a"; x.lineWidth=.5; x.fillRect(-p.w/2,-p.h/2,p.w,p.h); x.strokeRect(-p.w/2,-p.h/2,p.w,p.h); x.restore(); });
+    raf = requestAnimationFrame(tick);
+  };
+  tick();
+}
+function stopConfetti(){ cancelAnimationFrame(raf); $("#confetti").hidden = true; }
+
+render();
+</script>
+
+</body>
+</html>
